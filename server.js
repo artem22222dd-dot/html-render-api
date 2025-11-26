@@ -5,6 +5,11 @@ const puppeteer = require("puppeteer");
 const app = express();
 app.use(bodyParser.json({ limit: "10mb" }));
 
+// 👇 Добавляем маршрут, чтобы убрать "Cannot GET /"
+app.get("/", (req, res) => {
+  res.send("HTML Render API работает. Используйте POST /render");
+});
+
 app.post("/render", async (req, res) => {
   const html = req.body.html;
   if (!html) return res.status(400).json({ error: "HTML не передан" });
